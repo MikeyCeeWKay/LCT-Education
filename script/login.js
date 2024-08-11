@@ -21,7 +21,7 @@ document.getElementById('loginBtn').addEventListener('click', () => {
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            window.location.href = "index.html";
+            window.location.href = "../index.html";
         })
         .catch((error) => {
             document.getElementById('loginError').textContent = error.message;
