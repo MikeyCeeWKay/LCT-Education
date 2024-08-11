@@ -51,19 +51,21 @@ function loadAssignments() {
         assignmentsList.innerHTML = '';
         const data = snapshot.val();
         if (data) {
-            for (let key in data) {
-                const assignment = data[key];
+            const sortedAssignments = Object.keys(data)
+                .map(key => ({ id: key, ...data[key] }))
+                .sort((a, b) => b.timestamp - a.timestamp);
+
+            sortedAssignments.forEach(assignment => {
                 const listItem = document.createElement('div');
                 listItem.classList.add('assignment-item');
                 listItem.innerHTML = `
                     <a href="${assignment.url}" target="_blank">${assignment.name}</a>
-                    <button class="delete-btn" onclick="deleteAssignment('${key}')">Delete</button>`;
+                    <button class="delete-btn" onclick="deleteAssignment('${assignment.id}')">Delete</button>`;
                 assignmentsList.appendChild(listItem);
-            }
+            });
         }
     });
 }
-
 window.deleteAssignment = (key) => {
     const assignmentRef = dbRef(database, 'assignments/' + key);
     const storageRef = ref(storage, 'assignments/' + key);
