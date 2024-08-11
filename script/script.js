@@ -17,17 +17,18 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 const database = getDatabase(app);
 
-const fileInput = document.getElementById('fileInput');
-const uploadBtn = document.getElementById('uploadBtn');
-const assignmentsList = document.getElementById('assignmentsList');
+function sanitizeFileName(fileName) {
+    return fileName.replace(/[.#$[\]]/g, '_');
+}
 
-uploadBtn.addEventListener('click', () => {
-    const file = fileInput.files[0];
+document.getElementById('uploadBtn').addEventListener('click', () => {
+    const file = document.getElementById('fileInput').files[0];
     if (file) {
-        const storageRef = ref(storage, 'assignments/' + file.name);
+        const sanitizedFileName = sanitizeFileName(file.name);
+        const storageRef = ref(storage, 'assignments/' + sanitizedFileName);
         uploadBytes(storageRef, file).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
-                const assignmentRef = dbRef(database, 'assignments/' + file.name);
+                const assignmentRef = dbRef(database, 'assignments/' + sanitizedFileName);
                 set(assignmentRef, {
                     name: file.name,
                     url: url
@@ -41,14 +42,16 @@ function loadAssignments() {
     const assignmentsRef = dbRef(database, 'assignments');
     onValue(assignmentsRef, (snapshot) => {
         const assignmentsList = document.getElementById('assignmentsList');
-        assignmentsList.innerHTML = ''; // Clear the list
+        assignmentsList.innerHTML = '';
         const data = snapshot.val();
-        for (let key in data) {
-            const assignment = data[key];
-            const listItem = document.createElement('div');
-            listItem.innerHTML = `<a href="${assignment.url}" target="_blank">${assignment.name}</a> 
-                <button onclick="deleteAssignment('${key}')">Delete</button>`;
-            assignmentsList.appendChild(listItem);
+        if (data) {
+            for (let key in data) {
+                const assignment = data[key];
+                const listItem = document.createElement('div');
+                listItem.innerHTML = `<a href="${assignment.url}" target="_blank">${assignment.name}</a> 
+                    <button onclick="deleteAssignment('${key}')">Delete</button>`;
+                assignmentsList.appendChild(listItem);
+            }
         }
     });
 }
@@ -59,6 +62,6 @@ window.deleteAssignment = (key) => {
     deleteObject(storageRef).then(() => {
         remove(assignmentRef);
     });
-}
+};
 
 loadAssignments();
