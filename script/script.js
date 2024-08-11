@@ -36,7 +36,8 @@ document.getElementById('uploadBtn').addEventListener('click', () => {
                 const assignmentRef = dbRef(database, 'assignments/' + sanitizedFileName);
                 set(assignmentRef, {
                     name: file.name,
-                    url: url
+                    url: url,
+                    timestamp: Date.now()
                 });
             });
         });
