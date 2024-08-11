@@ -17,7 +17,15 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
-document.getElementById('signupBtn').addEventListener('click', () => {
+const signupBtn = document.getElementById("signupBtn");
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        signupBtn.click();
+    }
+});
+
+signupBtn.addEventListener('click', () => {
     const name = document.getElementById('nameInput').value;
     const email = document.getElementById('emailInput').value;
     const password = document.getElementById('passwordInput').value;
