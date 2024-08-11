@@ -15,7 +15,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-document.getElementById('loginBtn').addEventListener('click', () => {
+const loginBtn = document.getElementById('loginBtn');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        loginBtn.click();
+    }
+});
+
+loginBtn.addEventListener('click', (event) => {
+    event.preventDefault();
     const email = document.getElementById('emailInput').value;
     const password = document.getElementById('passwordInput').value;
 
@@ -25,5 +37,10 @@ document.getElementById('loginBtn').addEventListener('click', () => {
         })
         .catch((error) => {
             document.getElementById('loginError').textContent = error.message;
+            forgotPasswordLink.classList.remove('hidden');
         });
+});
+
+forgotPasswordLink.addEventListener('click', () => {
+    window.location.href = '../src/forgot-password.html';
 });
