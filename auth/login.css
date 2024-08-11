@@ -80,3 +80,13 @@ body {
 .switch-link a:hover {
     color: #005BBB;
 }
+
+.hidden {
+    display: none;
+    color: #007AFF;
+    cursor: pointer;
+}
+
+#forgotPasswordLink:hover {
+    text-decoration: underline;
+}
