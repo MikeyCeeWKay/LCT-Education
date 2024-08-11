@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 import { getDatabase, ref as dbRef, set, remove, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCV-Rm08q2gvLKb8mfZLSQUObyAVLfn9Pg",
@@ -27,6 +27,15 @@ onAuthStateChanged(auth, (user) => {
     if (!user) {
         window.location.href = "auth/login.html";
     }
+});
+
+const logoutBtn = document.getElementById('logoutBtn');
+logoutBtn.addEventListener('click', () => {
+    signOut(auth).then(() => {
+        window.location.href = "auth/login.html";
+    }).catch((error) => {
+        console.error('Logout Error:', error);
+    });
 });
 
 document.getElementById('fileInput').addEventListener('change', (event) => {
