@@ -38,8 +38,9 @@ uploadBtn.addEventListener('click', () => {
 
 function loadAssignments() {
     const assignmentsRef = dbRef(database, 'assignments');
-    assignmentsRef.on('value', (snapshot) => {
-        assignmentsList.innerHTML = '';
+    onValue(assignmentsRef, (snapshot) => {
+        const assignmentsList = document.getElementById('assignmentsList');
+        assignmentsList.innerHTML = ''; // Clear the list
         const data = snapshot.val();
         for (let key in data) {
             const assignment = data[key];
