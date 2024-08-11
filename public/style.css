@@ -117,3 +117,19 @@ h1 {
 .delete-btn:hover {
     background-color: #D32F2F;
 }
+
+.logout-btn {
+    background-color: #FF3B30;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    float: right;
+    margin-top: -10px;
+}
+
+.logout-btn:hover {
+    background-color: #D32F2F;
+}
