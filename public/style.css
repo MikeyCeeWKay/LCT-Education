@@ -73,6 +73,7 @@ h1 {
     padding: 10px;
     font-size: 16px;
     color: #333;
+    margin-top: 10px;
 }
 
 .assignments-list {
@@ -81,10 +82,11 @@ h1 {
 
 .assignment-item {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     padding: 10px 0;
     border-bottom: 1px solid #eee;
+    background-color: #fff;
+    border-radius: 5px;
 }
 
 .assignment-item:last-child {
