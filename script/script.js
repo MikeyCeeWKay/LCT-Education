@@ -9,7 +9,8 @@ const firebaseConfig = {
     storageBucket: "lct-education.appspot.com",
     messagingSenderId: "374072913221",
     appId: "1:374072913221:web:a253795cf95a1dda82a22c",
-    measurementId: "G-XMHZBWN6MH"
+    measurementId: "G-XMHZBWN6MH",
+    databaseURL: "https://lct-education-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
 
 const app = initializeApp(firebaseConfig);
