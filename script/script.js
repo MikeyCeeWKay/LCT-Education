@@ -21,6 +21,11 @@ function sanitizeFileName(fileName) {
     return fileName.replace(/[.#$[\]]/g, '_');
 }
 
+document.getElementById('fileInput').addEventListener('change', (event) => {
+    const fileName = event.target.files[0]?.name || 'No file selected';
+    document.getElementById('fileName').textContent = fileName;
+});
+
 document.getElementById('uploadBtn').addEventListener('click', () => {
     const file = document.getElementById('fileInput').files[0];
     if (file) {
@@ -48,8 +53,10 @@ function loadAssignments() {
             for (let key in data) {
                 const assignment = data[key];
                 const listItem = document.createElement('div');
-                listItem.innerHTML = `<a href="${assignment.url}" target="_blank">${assignment.name}</a> 
-                    <button onclick="deleteAssignment('${key}')">Delete</button>`;
+                listItem.classList.add('assignment-item');
+                listItem.innerHTML = `
+                    <a href="${assignment.url}" target="_blank">${assignment.name}</a>
+                    <button class="delete-btn" onclick="deleteAssignment('${key}')">Delete</button>`;
                 assignmentsList.appendChild(listItem);
             }
         }
